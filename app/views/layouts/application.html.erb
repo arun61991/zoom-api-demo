@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZoomDemo</title>
+    <%= csrf_meta_tags %>
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.3/css/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="https://source.zoom.us/1.8.3/css/react-select.css" />
+
+     <!-- import ZoomMtg dependencies -->
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/react.min.js"></script>
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/react-dom.min.js"></script>
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/redux.min.js"></script>
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/redux-thunk.min.js"></script>
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/jquery.min.js"></script>
+    <script src="https://source.zoom.us/1.8.3/lib/vendor/lodash.min.js"></script>
+
+    <!-- import ZoomMtg -->
+    <script src="https://source.zoom.us/zoom-meeting-1.8.3.min.js"></script>
+    
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class="ReactModal__Body--open">
+  	<% if flash[:notice] %>
+	  	<div class="notification is-primary global-notification">
+	  		<p class="notice"><%= notice %></p>  		
+	  	</div>
+  	<% end %>
+
+  	<% if flash[:alert] %>
+	  	<div class="notification is-danger global-notification">
+	  		<p class="alert"><%= alert %></p>  		
+	  	</div>
+  	<% end %>
+  	<nav class=" navbar is-info">
+  		<div class="navbar-brand">
+	  		<%= link_to root_path, class: "navbar-item" do %>
+	  			<h1 class="title is-5">ZoomDemo</h1>
+	  		<% end %>
+	  		<div class="navbar-burger burger" data-taget="navbarExample">
+	  			<span></span>
+	  			<span></span>
+	  			<span></span>
+	  		</div>
+	  	</div>
+
+	  	<div id="navbarExample" class="navbar-menu">
+	  		<div class="navbar-end">
+	  			<div class="field is-grouped">
+	  				<p class="control">
+	  					<% if user_signed_in? %>
+	  						<%= link_to(current_user.email, edit_registration_path(current_user), class: "button is-info") %>  
+	  					<% end %>
+	  				</p>
+	  				<p class="control">
+	  					<%#= link_to "New Tweet", root_path, class: "button is-info is-inverted" %>
+	  					<% if user_signed_in? %>
+						  
+						  <%= link_to('Logout', destroy_user_session_path, class: "button is-info",method: :delete) %>        
+						  
+						<% else %>
+						  
+						  <%= link_to('Login', new_user_session_path, class: "button is-info") %>  
+						  
+						<% end %>
+	  				</p>
+	  			</div>
+	  		</div>
+	  	</div>
+  	</nav>
+  	<%= yield :header %>
+  	<% if current_user && !@is_show %>
+  	<section class="section">
+	  <div class="container">
+	    <div class="columns">
+	      <div class="column is-one-quarter">
+	        <nav class="panel">
+	          <p class="panel-heading">Profile</p>
+	          <div class="panel-block">
+	            <article class="media">
+	              <div class="media-left">
+	                <figure class="image is64x64">
+	                  <img src="https://bulma.io/images/placeholders/64x64.png">
+	                </figure>
+	              </div>
+	              <div class="media-content">
+	                <div class="content">
+	                  <p>
+	                    <strong><%= current_user.email %></strong>
+	                    <small> </small>
+	                  </p>
+	                </div>
+	              </div>
+	            </article>
+	          </div>
+	          <div class="panel-block">
+	            <div class="level is-mobile">
+	              <div class="level-item has-centered-text">
+	                <div>
+	                  <p class="heading"><%= link_to 'List User', users_list_user_path, class: "button is-default" %></p>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="panel-block">
+	            <div class="level is-mobile">
+	              <div class="level-item has-centered-text">
+	                <div>
+	                  <p class="heading"><%= link_to 'Register User', users_new_user_path, class: "button is-default" %></p>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="panel-block">
+	            <div class="level is-mobile">
+	              <div class="level-item has-centered-text">
+	                <div>
+	                  <p class="heading"><%= link_to 'List Meeting', meetings_list_meetings_path, class: "button is-default" %></p>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	          <div class="panel-block">
+	            <div class="level is-mobile">
+	              <div class="level-item has-centered-text">
+	                <div>
+	                  <p class="heading"><%= link_to 'Add Meeting', meetings_new_path, class: "button is-default" %></p>
+	                </div>
+	              </div>
+	            </div>
+	          </div>
+	        </nav>
+	      </div>
+	      <% end %>
+	      
+			
+    	<%= yield %>
+    	<% if current_user && !@is_show  %>
+
+    </div>    
+  </div>
+</section>
+<% end %>
+  </body>
+</html>

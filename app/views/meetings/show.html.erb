@@ -1,0 +1,143 @@
+<button type="submit" class="btn btn-primary" id="join_meeting">Join</button>
+<div id="zmmtg-root"></div>
+<div id="aria-notify-area"></div>
+<!-- added on meeting init -->
+<div class="ReactModalPortal"></div>
+<div class="global-pop-up-box"></div>
+<div class="sharer-controlbar-container sharer-controlbar-container--hidden"></div>
+
+
+
+<script src="https://source.zoom.us/1.8.3/lib/vendor/react.min.js"></script>
+<script src="https://source.zoom.us/1.8.3/lib/vendor/react-dom.min.js"></script>
+<script src="https://source.zoom.us/1.8.3/lib/vendor/redux.min.js"></script>
+<script src="https://source.zoom.us/1.8.3/lib/vendor/redux-thunk.min.js"></script>
+<script src="https://source.zoom.us/1.8.3/lib/vendor/jquery.min.js"></script>
+<script src="https://source.zoom.us/1.8.3/lib/vendor/lodash.min.js"></script>
+<script src="https://source.zoom.us/zoom-meeting-1.8.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsrsasign/8.0.20/jsrsasign-all-min.js"></script>
+<script>
+	$( document ).ready(function() {
+		var meetingNumber = "<%= @meeting_id %>"
+		var meetConfig = {
+			apiKey: 'k4eueEAfRP6ZwZ0Eey83ag',
+			apiSecret: 'Zgk7ZFb5PEd1sGfbafMaDdPKGEW7YwHsZ03F',
+			meetingNumber: meetingNumber,
+			leaveUrl: '<%= @root_url %>meetings/list_meetings',
+			userName: 'Arun vaishnav',
+			userEmail: 'hello@green-apex.com',
+			passWord: '123123', 
+			role: 1
+		};
+    	ZoomMtg.preLoadWasm();
+		ZoomMtg.prepareJssdk();
+		getSignature(meetConfig);
+		// var signature = ZoomMtg.generateSignature({
+	 //        meetingNumber: meetConfig.meetingNumber,
+	 //        apiKey: meetConfig.apiKey,
+	 //        apiSecret: meetConfig.apiSecret,
+	 //        role: meetConfig.role,
+	 //        success: function (res) {
+	 //        	console.log(res.result);
+	 //        	meetConfig.signature = res.result;
+	 //        	ZoomMtg.init({
+		// 			leaveUrl: meetConfig.leaveUrl,
+		// 			isSupportAV: true,
+		// 			success: function() {
+		// 				ZoomMtg.join({
+		// 					signature: meetConfig.signature,
+		// 					apiKey: meetConfig.apiKey,
+		// 					meetingNumber: meetConfig.meetingNumber,
+		// 					userName: meetConfig.userName,
+		// 					// password optional; set by Host
+		// 					passWord: meetConfig.passWord,
+		// 					success: function (res) {
+		// 			            console.log("join meeting success");
+		// 			            console.log("get attendeelist");
+		// 			            ZoomMtg.getAttendeeslist({});
+		// 			            ZoomMtg.getCurrentUser({
+		// 			              success: function (res) {
+		// 			                console.log("success getCurrentUser", res.result.currentUser);
+		// 			              },
+		// 			            });
+		// 			        },
+		// 			        error: function (res) {
+		// 			            console.log(res);
+		// 			        }
+		// 				})		
+		// 			}
+		// 		})
+	 //        },
+	 //    });
+
+			function generateInstantToken(sdkKey, sdkSecret, topic, password = "") {
+			  let signature = "";
+			  // try {
+			  const iat = Math.round(new Date().getTime() / 1000);
+			  const exp = iat + 60 * 60 * 2;
+
+			  // Header
+			  const oHeader = { alg: "HS256", typ: "JWT" };
+			  // Payload
+			  const oPayload = {
+			    app_key: sdkKey,
+			    iat,
+			    exp,
+			    tpc: topic,
+			    pwd: password,
+			  };
+			  // Sign JWT
+			  const sHeader = JSON.stringify(oHeader);
+			  const sPayload = JSON.stringify(oPayload);
+			  signature = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, sdkSecret);
+			  return {signature: signature};
+			}
+
+			var sig_new = generateInstantToken(
+			  "k4eueEAfRP6ZwZ0Eey83ag",
+			  "Zgk7ZFb5PEd1sGfbafMaDdPKGEW7YwHsZ03F",
+			  "hello@green-apex.com",
+			  "password"
+			);
+		function getSignature(meetConfig) {
+			$.ajax({
+				type: "POST",
+				url: 'https://zoom-api-signature.herokuapp.com',
+				data: JSON.stringify({ meetingData: meetConfig }),
+				success: function(response){
+					console.log(response);
+					ZoomMtg.init({
+						leaveUrl: meetConfig.leaveUrl,
+						isSupportAV: true,
+						success: function() {
+							ZoomMtg.join({
+								signature: sig_new,
+								apiKey: meetConfig.apiKey,
+								meetingNumber: meetConfig.meetingNumber,
+								userName: meetConfig.userName,
+								// password optional; set by Host
+								passWord: meetConfig.passWord,
+								success: function (res) {
+						            console.log("join meeting success");
+						            console.log("get attendeelist");
+						            ZoomMtg.getAttendeeslist({});
+						            ZoomMtg.getCurrentUser({
+						              success: function (res) {
+						                console.log("success getCurrentUser", res.result.currentUser);
+						              },
+						            });
+						        },
+						        error: function (res) {
+						            console.log(res);
+						        }
+								// error(res) { 
+								// 	console.log(res) 
+								// }
+							})		
+						}
+					})
+				}
+			});
+		}
+	});
+</script>

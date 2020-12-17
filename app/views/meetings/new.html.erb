@@ -1,0 +1,62 @@
+
+<div class="column is-half ">
+  <article class="media box">
+    <div class="media-content">
+    	<%= form_for :meeting, url: "create" do |form| %>
+		  
+        <div class="field">
+          <%= form.label :topic, class: "label" %>
+          <div class="control">            
+            <%= form.text_field :topic, class: "input", placeholder: "Enter topic" %><br>            
+          </div>
+        </div>
+        <%= form.hidden_field :user_id, class: "input", placeholder: "Enter Zoom user_id", value: current_user.zoom_user_id %><br>
+        
+
+        <div class="field">
+          <%= form.label :type, class: "label" %>
+          <div class="control">
+            <div class="select">
+              <select id="meeting_type" name="meeting[type]" placeholder="Select User Type">
+                <option value="2">Scheduled meeting</option>
+                <option value="1">Instant meeting</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="field">
+          <%= form.label :start_time, class: "label" %>
+          <div class="control">            
+            <%= form.text_field :start_time, class: "input", placeholder: "Select Sart time" %><br>            
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :duration, class: "label" %>
+          <div class="control">            
+            <%= form.number_field :duration, class: "input", placeholder: "Enter Duration in Min" %><br>            
+          </div>
+        </div>
+
+        <div class="field">
+          <%= form.label :password, class: "label" %>
+          <div class="control">            
+            <%= form.text_field :password, class: "input", placeholder: "Enter password" %><br>            
+          </div>
+        </div>
+
+        
+        <div class="field is-grouped">
+          <div class="control">
+            <%= form.submit class: "button is-link" %>
+          </div>
+          <div class="control">
+            <%#= link_to "Cancel", rooms_path, class: "button is-link is-light" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </article>
+</div>
