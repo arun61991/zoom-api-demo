@@ -23,13 +23,13 @@
 	    apiKey: API_KEY,
 	    apiSecret: API_SECRET,
 	    meetingNumber:  "<%= @meeting_id %>", // "YOUR_HOST_MEETING_NUMBER"
-	    role: parseInt("<%= @role %>"), // 1 for host; 0 for attendee,
+	    role: 0, // 1 for host; 0 for attendee,
 	};
 
 	/** meetconfig to join meeting */
 	const meetConfig = {
 	    meetingNumber:  "<%= @meeting_id %>", // "YOUR_HOST_MEETING_NUMBER"
-	    userName: '<%= @userName %>',
+	    userName: 'Gust User',
 	    passWord: '<%= @password %>',
 	};
 	document

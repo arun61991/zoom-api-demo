@@ -12,13 +12,13 @@
             <strong><%= meeting["topic"] %> </strong><small><%= meeting["start_time"] %></small>
             <p>Duration <%= meeting["duration"]%>  Minutes</p>
             <p>Meeting Id - <%= meeting["id"]%></p>
-            <p>Join Url - <%= meeting["join_url"]%></p>
+            <p>Join Url - <%= @root_url + "joinmeeting/"+meeting["id"].to_s + get_pwd(meeting["join_url"]) %></p>
           </div>
         </div>
         
           <nav class="level">
             <div class="level-left is-mobile">
-                <%= link_to "Join", meeting_show_path(meeting["id"]), class: "level-item" %>
+                <%= link_to "Start", meeting_show_path(meeting["id"]), class: "level-item" %>
                 <%#= link_to edit_room_path(room), class: "level-item" do %>
                   <!-- <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span> -->
                 <%# end %>

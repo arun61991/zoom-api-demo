@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  topic: MyString
+  user_id: 1
+  meeting_type: 1
+  start_time: MyString
+  duration: 1
+  password: MyString
+  zoom_meeting_id: MyString
+
+two:
+  topic: MyString
+  user_id: 1
+  meeting_type: 1
+  start_time: MyString
+  duration: 1
+  password: MyString
+  zoom_meeting_id: MyString

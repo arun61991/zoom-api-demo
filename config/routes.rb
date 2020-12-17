@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   delete 'users/delete_user/:user_id' => 'users#delete_user', as: 'user_delete'
 
   root 'home#index'
+  get 'joinmeeting/:meeting_id' => 'home#joinmeeting', as: 'joinmeeting'
   devise_for :users, :controllers =>{ registrations: 'registrations',  :sessions => "sessions"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
