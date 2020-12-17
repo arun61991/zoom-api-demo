@@ -50,7 +50,7 @@
                 console.log('signature recieved', data);
                 ZoomMtg.init({
                     isSupportAV: true,
-                    leaveUrl: '<%= @root_url %>meetings/list_meetings',
+                    leaveUrl: '<%= @root_url %>',
                     success: function () {
                         console.log('zoom init success');
                         ZoomMtg.join({
