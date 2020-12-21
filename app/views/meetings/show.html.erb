@@ -4,15 +4,15 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">Modal title</p>
-      <button class="delete" aria-label="close"></button>
+      <button id= "ga_chat_close_button" class="delete" aria-label="close"></button>
     </header>
     <section class="modal-card-body">
       <!-- Content ... -->
     </section>
     <footer class="modal-card-foot">
-      <input class="input" placeholder="inter massage" type="text"  id="user_massage">
+      <input class="input" placeholder="enter massage..." type="text"  id="user_massage">
       <button class="button is-success">Send</button>
-      <button class="button">Cancel</button>
+      <!-- <button class="button">Cancel</button> -->
     </footer>
   </div>
 </div>
@@ -83,7 +83,10 @@
                                 console.log('custome ga_chat_button clicked success.');
                                 $('#ga_chat_modal').addClass("is-active");
                             });
-                            // 
+                            $('#ga_chat_close_button').click(function(){
+                                $('#ga_chat_modal').removeClass("is-active");
+                            });
+                            // ga_chat_close_button
                             // $('[aria-label="open the chat pane"]').click(function(){
                             //     alert("chat clicked");
                             //     console.log("chat clicked   ");
